@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 
-export default function Login() {
-    
-    
+export default function Login({navigation}) {
+
+
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 
@@ -14,16 +14,21 @@ export default function Login() {
                     placeholder="Digite seu email"
                 />
                 <TextInput
-                    style={styles.input}  
+                    style={styles.input}
                     placeholder="Digite sua senha"
                 />
-                <TouchableOpacity style={styles.button} >
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>
+
+
+               
+
+
             </View>
-            
+
         </TouchableWithoutFeedback>
-        
+
     );
 }
 const styles = StyleSheet.create({
@@ -31,7 +36,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#d3d3d1'
+        backgroundColor: '#ffffff'
     },
     title: {
         marginBottom: 14,
@@ -40,7 +45,7 @@ const styles = StyleSheet.create({
     input: {
         width: '90%',
         height: 45,
-        backgroundColor: '#A7A7A7',
+        backgroundColor: '#e6e6e6',
         borderRadius: 4,
         marginBottom: 14,
         padding: 8,
