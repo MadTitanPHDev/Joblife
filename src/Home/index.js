@@ -1,7 +1,13 @@
 import React from 'react';
 import { View, Text, TextInput, ScrollView, Image, TouchableOpacity, StyleSheet } from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
+
  
 const Home = () => {
+
+  const navigation = useNavigation();
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -33,10 +39,27 @@ const Home = () => {
           <Text style={styles.viewAllText}>Ver Todas</Text>
         </View>
         <View style={styles.categoriesRow}>
-          <View style={styles.categoryItem}>
-            <Image source={require('../assets/reforma.png')} style={styles.categoryIcon} />
-            <Text>Reforma e Reparos</Text>
-          </View>
+
+          
+        
+      <TouchableOpacity
+        style={styles.categoryItem}
+        // onPress={() =>
+        //   navigation.navigate('CategoryServices', {
+        //     categoryName: 'Reforma e Reparos',
+        //     services: categoryData['Reforma e Reparos'],
+        //   })
+        // }
+      >
+        <Image source={require('../assets/reforma.png')} style={styles.categoryIcon} />
+        <Text>Reforma e Reparos</Text>
+      </TouchableOpacity>
+
+         
+            
+           
+       
+          
           <View style={styles.categoryItem}>
             <Image source={require('../assets/casa.png')} style={styles.categoryIcon} />
             <Text>Serviços doméstico</Text>
