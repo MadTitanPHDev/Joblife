@@ -18,7 +18,7 @@ const CadastroUsuario = ({ navigation }) => (
             <TextInput
                 style={styles.input}
 
-                placeholder="digite seu nome"
+                placeholder="Insira seu nome"
                 keyboardType="text"
             //   onChangeText={onChangeText}       
             />
@@ -28,8 +28,8 @@ const CadastroUsuario = ({ navigation }) => (
                 style={styles.input}
                 //   onChangeText={onChangeNumber}
                 //   value={number}
-                placeholder="useless placeholder"
-                keyboardType="numeric"
+                placeholder="Email"
+                keyboardType="text"
             />
 
 
@@ -38,30 +38,26 @@ const CadastroUsuario = ({ navigation }) => (
                 style={styles.input}
                 //   onChangeText={onChangeNumber}
                 //   value={number}
-                placeholder="digite uma senha"
+                placeholder="Digite uma senha"
 
             />
-            {/* <Text style={styles.label}>Escolha uma opção:</Text> */}
-            {/* <Picker */}
-            {/* //     selectedValue={selectedOption}
-            //     // onValueChange={(itemValue) => setSelectedOption(itemValue)}
-            //     style={styles.picker}
-            // >
-            //     <Picker.Item label="Opção 1" value="opcao1" />
-            //     <Picker.Item label="Opção 2" value="opcao2" />
-            //     <Picker.Item label="Opção 3" value="opcao3" /> */}
-            {/* </Picker> */}
 
-            <Text style={styles.label}>Escolha uma opção:</Text>
+            <Text style={styles.label}>Confirmar Senha:</Text>
             <TextInput
                 style={styles.input}
-                value='cliente'
-            //   onChangeText={onChangeText}       
+                //   onChangeText={onChangeNumber}
+                //   value={number}
+                placeholder="Confirme sua senha"
+
             />
-             <Text style={styles.label}>Telefone</Text>
+           
+
+            
+            <Text style={styles.label}>Telefone</Text>
             <TextInput
                 style={styles.input}
-                value='cliente'
+                keyboardType="text"
+                placeholder="Telefone"
             //   onChangeText={onChangeText}       
             />
 
@@ -70,9 +66,9 @@ const CadastroUsuario = ({ navigation }) => (
                     <Text style={styles.textButton}>Cadastrar</Text>
                 </View>
             </TouchableHighlight>
-                
-          
-            
+
+
+
 
 
 
@@ -130,7 +126,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 7,
         placeholderTextColor: 'red',
-        backgroundColor: 'white',
+        backgroundColor: 'black',
     },
     label: {
         width: 300,
