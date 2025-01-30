@@ -18,7 +18,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="CadastroUsuario">
           
           <Stack.Screen name="BemVindo" component={BemVindo} />
           <Stack.Screen name="Login" component={Login} />
