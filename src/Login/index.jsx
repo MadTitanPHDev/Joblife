@@ -4,26 +4,58 @@ import { postLogin } from '../services/fetchs';
 import { useState } from 'react';
 import { Button } from 'react-native';
 import Correios from '../Correios'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
 
+    // const handleLogin = async () => {
+    //     try {
+    //         console.log({ email, senha })
+    //         const response = await postLogin({ email, senha });
+    //         if (response.success) {
+    //             navigation.navigate('Home'); // Navega se login for bem-sucedido
+    //         } else {
+    //             alert('Login inválido!');
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //         alert('Erro ao fazer login.');
+    //     }
+    // };
+
     const handleLogin = async () => {
+        console.log("Tentando login com:", { email, senha });
+    
         try {
-            console.log({ email, senha })
             const response = await postLogin({ email, senha });
-            if (response.success) {
-                navigation.navigate('Home'); // Navega se login for bem-sucedido
+            console.log("Resposta do servidor:", response);
+    
+            if (response.user && response.user.token) {
+                console.log("Usuário autenticado com sucesso!");
+    
+                // Armazenando os dados no AsyncStorage
+                await AsyncStorage.setItem('localUser', JSON.stringify(response.user));
+                await AsyncStorage.setItem('localToken', response.user.token);
+    
+                navigation.navigate('Home');
             } else {
-                alert('Login inválido!');
+                alert(response.message || 'Login inválido!');
             }
         } catch (error) {
-            console.error(error);
-            alert('Erro ao fazer login.');
+            console.error("Erro no login:", error);
+    
+            if (error.response) {
+                console.log("Erro na requisição:", error.response.data);
+                alert(error.response.data.message || "Erro ao fazer login.");
+            } else {
+                alert("Erro de conexão com o servidor.");
+            }
         }
     };
+    
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -33,12 +65,15 @@ export default function Login({ navigation }) {
                 <TextInput
                     style={styles.input}
                     placeholder="Digite seu email"
+                    value={email}
                     onChangeText={setEmail}
                 />
                 <TextInput
                     style={styles.input}
                     placeholder="Digite sua senha"
                     onChangeText={setSenha}
+                    value={senha}
+                    secureTextEntry
                 />
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Acessar</Text>
@@ -46,8 +81,8 @@ export default function Login({ navigation }) {
 
 
                 <Button
-                    title="Consultar CEP"
-                    onPress={() => navigation.navigate('Correios')}
+                    title="Cadastre-se"
+                    onPress={() => navigation.navigate('CadastroUsuario')}
                 />
 
 
