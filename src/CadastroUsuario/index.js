@@ -1,80 +1,182 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import {
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+    Alert,
+    ScrollView,
+    Image,
+} from 'react-native';
+import { cadastroUsuario } from '../services/fetchs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
+import { useMutation } from '@tanstack/react-query';
 
-import { launchImageLibrary } from 'react-native-image-picker';
 
-import { Alert, Button, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableHighlight, View, Picker } from 'react-native';
+const CadastroUsuario = () => {
+
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [tipoUsuario, setTipoUsuario] = useState('cliente');
+    const [telefone, setTelefone] = useState('');
+    const [imagem, setImagem] = useState(null);
+
+
+    const mutation = useMutation({
+        mutationFn: ({ nome, email, senha, telefone, imagem }) => {
+            const formData = new FormData();
+
+            // formData.append('user', { nome, email, senha, telefone, tipoUsuario, imagem });
+
+            formData.append('nome', nome);
+            formData.append('email', email);
+            formData.append('senha', senha);
+            formData.append('telefone', telefone);
 
 
 
-const CadastroUsuario = ({ navigation }) => (
+            if (imagem) {
 
-    <SafeAreaView style={styles.container} >
-        <ImageBackground source={require('../assets/backGround.png')} resizeMode="cover" style={styles.image}>
+                
+                formData.append('imagem', {
+                    uri: imagem,
+                    type: 'image/jpeg',
+                    name: 'imagem.jpg'
+                });
+            }
+            return cadastroUsuario(formData);
+        },
 
+        onSuccess: async (data) => {
+            console.log("dados recebidos: ", data);
+            const user = data?.user;
+            const token = data?.token;
+            if (user && token) {
+                await AsyncStorage.setItem('localUser', JSON.stringify(user));
+                await AsyncStorage.setItem('localToken', token);
+                setIsAuthenticated(true);
+            } else {
+                console.error('Dados inválidos: ', data);
+            }
+        }
+
+    });
+
+    const handleImagemUsuario = () => {
+        Alert.alert(
+            "Selecione uma imagem", "Informe de onde você quer pegar a foto", [
+            {
+                text: 'Galeria',
+                onPress: () => pickImageFromGalery(),
+                style: 'default',
+            },
+            {
+                text: 'Camera',
+                onPress: () => pickImageFromCamera(),
+                style: 'default',
+            },
+        ]);
+    };
+
+    const pickImageFromGalery = async () => {
+        const options = {
+            mediaType: 'photo',
+        };
+        const result = await launchImageLibrary(options);
+        if (result?.assets && result.assets.length > 0) {
+            console.log('Imagem selecionada da galeria:', result);
+            const imageUri = result.assets[0].uri
+            console.log("Imagem da Galeria:", imageUri); // Verifique a URI
+            setImagem(imageUri); // Atualize o estado com a URI
+        }
+    };
+
+    const pickImageFromCamera = async () => {
+        const options = {
+            mediaType: 'photo',
+        };
+        const result = await launchCamera(options);
+        if (result?.assets && result.assets.length > 0) {
+            const imageUri = result.assets[0].uri
+            console.log("Imagem da Camera:", imageUri); // Verifique a URI
+            setImagem(imageUri); // Atualize o estado com a URI
+        }
+    };
+
+    return (
+
+        <SafeAreaView style={styles.container} >
+            {/* <ImageBackground source={require('../assets/backGround.png')} resizeMode="cover" style={styles.image}> */}
 
             <Text style={styles.label}>Nome:</Text>
             <TextInput
                 style={styles.input}
-
-                placeholder="Insira seu nome"
+                placeholder="Digite seu nome"
                 keyboardType="text"
-            //   onChangeText={onChangeText}       
+                value={nome}
+                onChangeText={setNome}
             />
 
             <Text style={styles.label}>Email:</Text>
             <TextInput
                 style={styles.input}
-                //   onChangeText={onChangeNumber}
-                //   value={number}
+                onChangeText={setEmail}
+                value={email}
                 placeholder="Email"
-                keyboardType="text"
+                keyboardType="email-address"
             />
 
 
             <Text style={styles.label}>Senha:</Text>
             <TextInput
                 style={styles.input}
-                //   onChangeText={onChangeNumber}
-                //   value={number}
-                placeholder="Digite uma senha"
+                onChangeText={setSenha}
+                value={senha}
+                placeholder="Informe uma senha"
+                secureTextEntry
 
             />
 
-            <Text style={styles.label}>Confirmar Senha:</Text>
-            <TextInput
-                style={styles.input}
-                //   onChangeText={onChangeNumber}
-                //   value={number}
-                placeholder="Confirme sua senha"
-
-            />
-           
-
-            
             <Text style={styles.label}>Telefone</Text>
             <TextInput
                 style={styles.input}
-                keyboardType="text"
-                placeholder="Telefone"
-            //   onChangeText={onChangeText}       
+                placeholder="Insira seu telefone"
+                keyboardType="phone-pad"
+                value={telefone}
+                onChangeText={setTelefone}
             />
 
-            <TouchableHighlight style={styles.buttonComecar} onPress={() => navigation.navigate('Login')}>
-                <View>
-                    <Text style={styles.textButton}>Cadastrar</Text>
-                </View>
-            </TouchableHighlight>
 
 
+            <View>
+                <TouchableOpacity style={styles.buttonImagem} onPress={handleImagemUsuario}>
+                    <Text style={styles.textButton}>Selecione uma imagem</Text>
+                </TouchableOpacity>
+                {imagem &&
+                    (<Image source={{ uri: imagem }} style={{ width: 200, height: 200 }} />
+                    )}
+            </View>
 
 
+            <TouchableOpacity
+                style={styles.buttonComecar}
+                onPress={() => {
+                    console.log({ nome, email, senha, telefone, imagem });
+                    mutation.mutate({ nome, email, senha, telefone, imagem: imagem });
+                }}
+            >
+                <Text style={styles.textButton}>Cadastrar</Text>
+            </TouchableOpacity>
 
+            {/* </ImageBackground> */}
+        </SafeAreaView>
+    )
+};
 
-        </ImageBackground>
-    </SafeAreaView>
-);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -86,6 +188,18 @@ const styles = StyleSheet.create({
     },
 
     buttonComecar: {
+        borderRadius: 50,
+        backgroundColor: "#023f57",
+        padding: 10,
+        alignItems: "center",
+        borderTopEndRadius: 25,
+        borderBottomEndRadius: 25,
+        borderTopStartRadius: 25,
+        borderBottomStartRadius: 25,
+        paddingHorizontal: 80,
+        marginBottom: 80
+    },
+    buttonImagem: {
         borderRadius: 50,
         backgroundColor: "#023f57",
         padding: 10,
@@ -126,7 +240,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 7,
         placeholderTextColor: 'red',
-        backgroundColor: 'black',
+        backgroundColor: 'offwhite',
     },
     label: {
         width: 300,

@@ -1,19 +1,23 @@
 import axios from "axios";
-
-// localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoxLCJpYXQiOjE3MzMzNTE3MjMsImV4cCI6MTczMzQzODEyM30.hcnA9fIbrvybK2d3f7TwUT0p88vY04tUVl4hG_P3CXY');
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const api = axios.create({
-    baseURL: `http://localhost:3333/login`
+    baseURL: `http://192.168.50.253:3333`
 });
 
-api.interceptors.request.use(config => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-});
-
-// api.interceptors.request.use(tokenMiddleware);
+api.interceptors.request.use(
+    async (config) => {
+        const token = await AsyncStorage.getItem('localToken');
+        if (token) {
+            console.log(token);
+            config.headers.Authorization = `Bearer ${token}`
+        }
+        if (config.data instanceof FormData) {
+            config.headers['Content-Type'] = 'multipart/form-data';
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
 export default api;
