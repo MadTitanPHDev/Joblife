@@ -1,9 +1,5 @@
 import api from "./api"
 
-// export const postLogin = async (body) => {
-//     const response = await api.post('/login', body); // ✅ Correto!
-//     return response.data;
-// };
 
 export const postLogin = async (body) => {
     try {
@@ -30,6 +26,16 @@ export const cadastroUsuario = async (formData) => {
 
 };
 
+export const perfilUsuario = async () => {
+    try {
+        // Faz a requisição para buscar o perfil do usuário
+        const response = await api.get('/users/id'); // Ou '/users/id', dependendo da sua API
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar perfil:", error.response?.data || error.message);
+        throw error;
+    }
+};
 
 
 
