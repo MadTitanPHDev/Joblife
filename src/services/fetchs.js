@@ -26,6 +26,18 @@ export const cadastroUsuario = async (formData) => {
 
 };
 
+export const cadastrarServico = async (formData) => {
+    try {
+        console.log('fetch: ',formData)
+        const { data } = await api.post('/catalogoServicos', formData);
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+
+};
+
 export const perfilUsuario = async () => {
     try {
         // Faz a requisição para buscar o perfil do usuário

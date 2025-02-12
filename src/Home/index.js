@@ -2,8 +2,9 @@ import React from 'react';
 import { View, Text, TextInput, ScrollView, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import { Button } from '@react-navigation/elements';
 
- 
+
 const Home = () => {
 
   const navigation = useNavigation();
@@ -16,14 +17,21 @@ const Home = () => {
           <Image source={require('../assets/job.png')} style={styles.profileIcon} />
         </TouchableOpacity>
       </View>
-     
+
       <View style={styles.searchContainer}>
         <TextInput
           placeholder="pesquise um serviço..."
           style={styles.searchInput}
         />
+        
+
       </View>
- 
+
+      <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('CadastroCatalogoServicos')}>
+        
+      </TouchableOpacity>
+
+
       <TouchableOpacity style={styles.banner}>
         <Image source={require('../assets/logo.png')} style={styles.bannerImage} />
         <View style={styles.bannerTextContainer}>
@@ -32,7 +40,7 @@ const Home = () => {
           <Text style={styles.bannerCTA}>Ganhe até 40% de desconto!</Text>
         </View>
       </TouchableOpacity>
- 
+
       <View style={styles.categoriesContainer}>
         <View style={styles.sectionHeaderContainer}>
           <Text style={styles.sectionTitle}>Todas Categorias</Text>
@@ -40,26 +48,26 @@ const Home = () => {
         </View>
         <View style={styles.categoriesRow}>
 
-          
-        
-      <TouchableOpacity
-        style={styles.categoryItem}
-        // onPress={() =>
-        //   navigation.navigate('CategoryServices', {
-        //     categoryName: 'Reforma e Reparos',
-        //     services: categoryData['Reforma e Reparos'],
-        //   })
-        // }
-      >
-        <Image source={require('../assets/reforma.png')} style={styles.categoryIcon} />
-        <Text>Reforma e Reparos</Text>
-      </TouchableOpacity>
 
-         
-            
-           
-       
-          
+
+          <TouchableOpacity
+            style={styles.categoryItem}
+          // onPress={() =>
+          //   navigation.navigate('CategoryServices', {
+          //     categoryName: 'Reforma e Reparos',
+          //     services: categoryData['Reforma e Reparos'],
+          //   })
+          // }
+          >
+            <Image source={require('../assets/reforma.png')} style={styles.categoryIcon} />
+            <Text>Reforma e Reparos</Text>
+          </TouchableOpacity>
+
+
+
+
+
+
           <View style={styles.categoryItem}>
             <Image source={require('../assets/casa.png')} style={styles.categoryIcon} />
             <Text>Serviços doméstico</Text>
@@ -74,7 +82,7 @@ const Home = () => {
           </View>
         </View>
       </View>
- 
+
       <View style={styles.recommendedContainer}>
         <View style={styles.sectionHeaderContainer}>
           <Text style={styles.sectionTitle}>Recomendado</Text>
@@ -116,7 +124,7 @@ const Home = () => {
     </ScrollView>
   );
 };
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -241,7 +249,7 @@ const styles = StyleSheet.create({
     color: '#777',
   },
 });
- 
+
 export default Home;
- 
- 
+
+
