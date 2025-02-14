@@ -1,13 +1,15 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { postLogin } from '../services/fetchs';
-import { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button } from 'react-native';
 import Correios from '../Correios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AuthContext from '../AuthContext';
 
 export default function Login({ navigation }) {
 
+    const isAuthenticated  = useContext(AuthContext);
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
 
@@ -40,7 +42,7 @@ export default function Login({ navigation }) {
                 await AsyncStorage.setItem('localUser', JSON.stringify(response.user));
                 await AsyncStorage.setItem('localToken', response.user.token);
     
-                navigation.navigate('Home');
+                navigation.navigate('Home'); 
             } else {
                 alert(response.message || 'Login inválido!');
             }
@@ -55,7 +57,9 @@ export default function Login({ navigation }) {
             }
         }
     };
-    
+    if(isAuthenticated) {
+        navigation.navigate('Home'); 
+    }
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

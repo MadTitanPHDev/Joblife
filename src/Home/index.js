@@ -12,7 +12,7 @@ const Home = () => {
     <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Qual Servico você precisa</Text>
-        <TouchableOpacity style={styles.profileIconContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('PerfilUsuario')} style={styles.profileIconContainer}>
           <Image source={require('../assets/job.png')} style={styles.profileIcon} />
         </TouchableOpacity>
       </View>

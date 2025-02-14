@@ -14,6 +14,7 @@ import { cadastroUsuario } from '../services/fetchs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import { useMutation } from '@tanstack/react-query';
+import AuthContext from '../AuthContext';
 
 
 const CadastroUsuario = () => {
@@ -24,7 +25,7 @@ const CadastroUsuario = () => {
     const [tipoUsuario, setTipoUsuario] = useState('cliente');
     const [telefone, setTelefone] = useState('');
     const [imagem, setImagem] = useState(null);
-
+    const { setIsAuthenticated } = React.useContext(AuthContext);
 
     const mutation = useMutation({
         mutationFn: ({ nome, email, senha, telefone, imagem }) => {
@@ -247,7 +248,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 8,
         textAlign: 'left',
-        marginBottom: 4,
     },
 
 
