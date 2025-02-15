@@ -7,6 +7,7 @@ import {
     Image,
     ScrollView,
     TouchableOpacity,
+    TextInput,
 } from 'react-native';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getUsuario, atualizarStatus } from '../services/fetchs';
@@ -89,14 +90,18 @@ const PerfilUsuario = () => {
                         source={{ uri: 'http://10.57.45.56:3333/users/' + perfilUsuario?.foto_usuario }}
                         style={styles.profileImage}
                     />
-                    <Text style={styles.profileName}>{perfilUsuario?.nome}</Text>
-                    <Text style={styles.profileInfo}>{perfilUsuario?.email}</Text>
-                    <Text style={styles.profileInfo}>{perfilUsuario?.telefone}</Text>
-                    <Text style={styles.profileInfo}>{perfilUsuario?.tipo_usuario}</Text>
+                    <Text style={styles.profileName}>Dados pessoais</Text>
+                    <View style={styles.profileBox}>
+                        
+                        <TextInput editable={false} style={styles.profileInfo2}>{perfilUsuario?.email}</TextInput>
+                        <TextInput editable={false} style={styles.profileInfo2}>{perfilUsuario?.telefone}</TextInput>
+                        <TextInput editable={false} style={styles.profileInfo2}>{perfilUsuario?.nome}</TextInput>
+                        <TextInput editable={false} style={styles.profileInfo2}>{perfilUsuario?.tipo_usuario}</TextInput>
+                    </View>    
                 </View>
                 <Text>Olá, {perfilUsuario?.nome}</Text>
                 <TouchableOpacity style={styles.button} onPress={() => {mutation.mutate()}}>
-                    <Text>{isPrestador ? 'Você é um prestador de serviço' : 'Quer prestar serviço ?'}</Text>
+                    <Text>{isPrestador ? 'Você é um prestador de serviço, quer deixar de ser ?' : 'Quer prestar serviço ?'}</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
@@ -132,6 +137,14 @@ const styles = StyleSheet.create({
         color: '#666',
         marginBottom: 5,
     },
+    profileInfo2: {
+        fontSize: 16,
+        color: '#333',
+        borderColor: '#ccc',
+        borderWidth: 1,
+        padding: 10,
+        borderRadius: 5,
+    },
     favoritesSection: {
         width: '100%',
         paddingHorizontal: 20,
@@ -162,6 +175,18 @@ const styles = StyleSheet.create({
 
     button: {
         backgroundColor: '#E5E6E2',
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 10,
+        marginBottom: 10,
+        alignItems: 'center',
+        textColor: '#FF0133'
+    },
+
+    profileBox: {
+        backgroundColor: '#E5E6E2',
+        width: 300,
+        height: 230,
         padding: 10,
         borderRadius: 5,
         marginTop: 10,

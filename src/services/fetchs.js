@@ -51,6 +51,16 @@ export const getUsuario = async () => {
 };
 
 
+export const getUsuarios = async () => {
+    try {
+        const response = await axios.get('http://10.57.45.56:3333/usuarios');
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+
 
 
 

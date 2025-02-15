@@ -10,6 +10,8 @@ import Correios from './src/Correios';
 import CadastroUsuario from './src/CadastroUsuario';
 import Home from './src/Home';
 import PerfilUsuario from './src/PerfilUsuario';
+import PerfilProfissional from './src/PerfilProfissional';
+
 
 const queryClient = new QueryClient()
 
@@ -20,7 +22,9 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="BemVindo">
+
           
+          <Stack.Screen name="PerfilProfissional" component={PerfilProfissional} />
           <Stack.Screen name='PerfilUsuario' component={PerfilUsuario} />
           <Stack.Screen name="BemVindo" component={BemVindo} />
           <Stack.Screen name="Login" component={Login} />

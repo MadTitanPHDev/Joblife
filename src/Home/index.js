@@ -2,8 +2,9 @@ import React from 'react';
 import { View, Text, TextInput, ScrollView, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import { Button } from '@react-navigation/elements';
 
- 
+
 const Home = () => {
 
   const navigation = useNavigation();
@@ -16,14 +17,14 @@ const Home = () => {
           <Image source={require('../assets/job.png')} style={styles.profileIcon} />
         </TouchableOpacity>
       </View>
-     
+
       <View style={styles.searchContainer}>
         <TextInput
           placeholder="pesquise um serviço..."
           style={styles.searchInput}
         />
       </View>
- 
+
       <TouchableOpacity style={styles.banner}>
         <Image source={require('../assets/logo.png')} style={styles.bannerImage} />
         <View style={styles.bannerTextContainer}>
@@ -32,7 +33,7 @@ const Home = () => {
           <Text style={styles.bannerCTA}>Ganhe até 40% de desconto!</Text>
         </View>
       </TouchableOpacity>
- 
+
       <View style={styles.categoriesContainer}>
         <View style={styles.sectionHeaderContainer}>
           <Text style={styles.sectionTitle}>Todas Categorias</Text>
@@ -40,26 +41,26 @@ const Home = () => {
         </View>
         <View style={styles.categoriesRow}>
 
-          
-        
-      <TouchableOpacity
-        style={styles.categoryItem}
-        // onPress={() =>
-        //   navigation.navigate('CategoryServices', {
-        //     categoryName: 'Reforma e Reparos',
-        //     services: categoryData['Reforma e Reparos'],
-        //   })
-        // }
-      >
-        <Image source={require('../assets/reforma.png')} style={styles.categoryIcon} />
-        <Text>Reforma e Reparos</Text>
-      </TouchableOpacity>
 
-         
-            
-           
-       
-          
+
+          <TouchableOpacity
+            style={styles.categoryItem}
+          // onPress={() =>
+          //   navigation.navigate('CategoryServices', {
+          //     categoryName: 'Reforma e Reparos',
+          //     services: categoryData['Reforma e Reparos'],
+          //   })
+          // }
+          >
+            <Image source={require('../assets/reforma.png')} style={styles.categoryIcon} />
+            <Text>Reforma e Reparos</Text>
+          </TouchableOpacity>
+
+
+
+
+
+
           <View style={styles.categoryItem}>
             <Image source={require('../assets/casa.png')} style={styles.categoryIcon} />
             <Text>Serviços doméstico</Text>
@@ -74,49 +75,58 @@ const Home = () => {
           </View>
         </View>
       </View>
- 
+
       <View style={styles.recommendedContainer}>
         <View style={styles.sectionHeaderContainer}>
           <Text style={styles.sectionTitle}>Recomendado</Text>
           <Text style={styles.viewAllText}>Todos recomendados</Text>
         </View>
-        <View style={styles.serviceItem}>
+
+        <TouchableOpacity style={styles.serviceItem}
+          onPress={() => navigation.navigate('PerfilProfissional')}>
           <Image source={require('../assets/paulo.png')} style={styles.serviceImage} />
           <View style={styles.serviceDetails}>
             <Text style={styles.serviceName}>Desenvolvedor sistemas</Text>
             <Text style={styles.servicePrice}>R$ 30/hr</Text>
             <Text style={styles.serviceRating}>4.9 (120 Vizualizações)</Text>
           </View>
-        </View>
-        <View style={styles.serviceItem}>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.serviceItem}
+          onPress={() => navigation.navigate('PerfilProfissional')}>
           <Image source={require('../assets/tim.png')} style={styles.serviceImage} />
           <View style={styles.serviceDetails}>
             <Text style={styles.serviceName}>Professor de Patins</Text>
             <Text style={styles.servicePrice}>R$ 30/hr</Text>
             <Text style={styles.serviceRating}>4.8 (99 Vizualizações)</Text>
           </View>
-        </View>
-        <View style={styles.serviceItem}>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.serviceItem}
+          onPress={() => navigation.navigate('PerfilProfissional')}>
           <Image source={require('../assets/2.jpg')} style={styles.serviceImage} />
           <View style={styles.serviceDetails}>
             <Text style={styles.serviceName}>Encanador</Text>
             <Text style={styles.servicePrice}>a combinar</Text>
             <Text style={styles.serviceRating}>4.8 (99 Vizualizações)</Text>
           </View>
-        </View>
-        <View style={styles.serviceItem}>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.serviceItem}
+          onPress={() => navigation.navigate('PerfilProfissional')}>
           <Image source={require('../assets/4.jpg')} style={styles.serviceImage} />
           <View style={styles.serviceDetails}>
-            <Text style={styles.serviceName}>Professor Inglês</Text>
+            <Text style={styles.serviceName}>Professor de Inglês</Text>
             <Text style={styles.servicePrice}>R$ 30/hr</Text>
             <Text style={styles.serviceRating}>4.8 (99 Vizualizações)</Text>
           </View>
-        </View>
+        </TouchableOpacity>
+   
       </View>
     </ScrollView>
   );
 };
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -240,8 +250,16 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#777',
   },
+  voltar: {
+    width: 300,
+    zIndex: 9999,
+    marginRight: 10,
+    fontSize: 14,
+    color: '#005f9e',
+  },
+
 });
- 
+
 export default Home;
- 
- 
+
+
