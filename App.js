@@ -9,6 +9,8 @@ import Login from './src/Login';
 import Correios from './src/Correios';
 import CadastroUsuario from './src/CadastroUsuario';
 import Home from './src/Home';
+import PerfilUsuario from './src/PerfilUsuario';
+import CadastroCatalogo from './src/CadastroCatalogoServicos';
 
 const queryClient = new QueryClient()
 
@@ -18,14 +20,16 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="CadastroUsuario">
+        <Stack.Navigator initialRouteName="CadastroCatalogo">
           
+          <Stack.Screen name='PerfilUsuario' component={PerfilUsuario} />
           <Stack.Screen name="BemVindo" component={BemVindo} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Correios" component={Correios} />
           <Stack.Screen name="CadastroUsuario" component={CadastroUsuario} />
-
+          <Stack.Screen name="CadastroCatalogo" component={CadastroCatalogo} />
+          
           
           </Stack.Navigator>
       </NavigationContainer>
