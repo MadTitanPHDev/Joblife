@@ -14,6 +14,7 @@ import { cadastroUsuario } from '../services/fetchs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import { useMutation } from '@tanstack/react-query';
+import AuthContext from '../AuthContext';
 
 
 const CadastroUsuario = () => {
@@ -24,7 +25,7 @@ const CadastroUsuario = () => {
     const [tipoUsuario, setTipoUsuario] = useState('cliente');
     const [telefone, setTelefone] = useState('');
     const [imagem, setImagem] = useState(null);
-
+    const setIsAuthenticated = React.useContext(AuthContext);
 
     const mutation = useMutation({
         mutationFn: ({ nome, email, senha, telefone, imagem }) => {
@@ -184,14 +185,14 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: "center"
+        alignItems: 'center',
     },
 
     buttonComecar: {
         borderRadius: 50,
-        backgroundColor: "#023f57",
+        backgroundColor: '#023f57',
         padding: 10,
-        alignItems: "center",
+        alignItems: 'center',
         borderTopEndRadius: 25,
         borderBottomEndRadius: 25,
         borderTopStartRadius: 25,
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
         marginBottom: 80
     },
     textButton: {
-        color: "white"
+        color: 'white',
     },
     containerCadastrar: {
         backgroundColor: 'red',
@@ -221,8 +222,7 @@ const styles = StyleSheet.create({
 
         // backgroundColor: 'pink',
         alignItems: 'center',
-        justifyContent: 'center'
-
+        justifyContent: 'center',
     },
 
     textComecar: {
@@ -247,7 +247,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 8,
         textAlign: 'left',
-        marginBottom: 4,
     },
 
 

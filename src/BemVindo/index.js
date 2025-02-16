@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Alert, Button, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import AuthContext from '../AuthContext';
 
 
 
-const BemVIndo = ({navigation}) => (
+const BemVIndo = ({navigation}) => {
+  const isAuthenticated  = useContext(AuthContext);
+  console.log('isAuthenticated: ',isAuthenticated)
+  return (
 
   <SafeAreaView style={styles.container} >    
     <ImageBackground source={require('../assets/backGround.png')} resizeMode="cover" style={styles.image}>
@@ -27,7 +31,7 @@ const BemVIndo = ({navigation}) => (
 
     </ImageBackground>    
   </SafeAreaView>
-);
+)};
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -12,9 +12,9 @@ export const AuthProvider = ({ children }) => {
     AsyncStorage.getItem('localToken').then((token) => 
     {
       console.log('useEffect AuthContext: ',token)
-        if(token)
-            setIsAuthenticated(true)
-      setIsLoading(false)
+        if(token){
+            setIsAuthenticated(true)}
+      setIsLoading(false);
     }
     )
   }, []);
