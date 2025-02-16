@@ -10,7 +10,10 @@ import Correios from './src/Correios';
 import CadastroUsuario from './src/CadastroUsuario';
 import Home from './src/Home';
 import PerfilUsuario from './src/PerfilUsuario';
+
 import PerfilProfissional from './src/PerfilProfissional';
+
+import CadastroCatalogo from './src/CadastroCatalogoServicos';
 
 
 const queryClient = new QueryClient()
@@ -21,7 +24,9 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
+
         <Stack.Navigator initialRouteName="BemVindo">
+
 
           
           <Stack.Screen name="PerfilProfissional" component={PerfilProfissional} />
@@ -31,7 +36,8 @@ export default function App() {
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Correios" component={Correios} />
           <Stack.Screen name="CadastroUsuario" component={CadastroUsuario} />
-
+          <Stack.Screen name="CadastroCatalogo" component={CadastroCatalogo} />
+          
           
           </Stack.Navigator>
       </NavigationContainer>

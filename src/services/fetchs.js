@@ -39,7 +39,9 @@ export const cadastroUsuario = async (formData) => {
 
 };
 
+
 export const getUsuario = async () => {
+
     try {
         // Faz a requisição para buscar o perfil do usuário
         const response = await api.get('/users'); // Ou '/users/id', dependendo da sua API

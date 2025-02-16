@@ -23,6 +23,8 @@ const Home = () => {
           placeholder="pesquise um serviço..."
           style={styles.searchInput}
         />
+        
+
       </View>
 
       <TouchableOpacity style={styles.banner}>
