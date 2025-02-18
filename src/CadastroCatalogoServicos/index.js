@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -12,25 +12,33 @@ import {
 } from 'react-native';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import { useMutation } from '@tanstack/react-query';
-import { cadastrarServico } from '../services/fetchs'; // Função para cadastrar o serviço
+import { cadastrarServico } from '../services/fetchs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CadastroServico = ({ navigation }) => {
     const [nomeServico, setNomeServico] = useState('');
     const [descricaoServico, setDescricaoServico] = useState('');
-    const [categoria, setCategoria] = useState('');
-    const [areaAtuacao, setAreaAtuacao] = useState('');
-    const [precoMin, setPrecoMin] = useState('');
     const [imagem, setImagem] = useState(null);
+    const [idUsuario, setIdUsuario] = useState(null);
+
+    // Recupera o id_usuario do AsyncStorage
+    useEffect(() => {
+        const fetchUserId = async () => {
+            const user = await AsyncStorage.getItem('localUser');
+            if (user) {
+                const parsedUser = JSON.parse(user);
+                setIdUsuario(parsedUser.id_usuario); // Define o id_usuario no estado
+            }
+        };
+        fetchUserId();
+    }, []);
 
     const mutation = useMutation({
-        mutationFn: ({ nomeServico, descricaoServico, categoria, areaAtuacao, precoMin, imagem }) => {
+        mutationFn: ({ nomeServico, descricaoServico, areaAtuacao, precoMin, imagem }) => {
             const formData = new FormData();
-            formData.append('nomeServico', nomeServico);
-            formData.append('descricaoServico', descricaoServico);
-            formData.append('categoria', categoria);
-            formData.append('areaAtuacao', areaAtuacao);
-            formData.append('precoMin', precoMin);
+            formData.append('id_usuario', idUsuario); // Adiciona o id_usuario ao FormData
+            formData.append('nome_servico', nomeServico);
+            formData.append('descricao_Servico', descricaoServico);
 
             if (imagem) {
                 formData.append('imagem', {
@@ -40,7 +48,7 @@ const CadastroServico = ({ navigation }) => {
                 });
             }
 
-            return cadastrarServico(formData); // Função para enviar os dados ao backend
+            return cadastrarServico(formData); // Chama a função do fetch
         },
         onSuccess: async (data) => {
             console.log('Serviço cadastrado com sucesso:', data);
@@ -97,9 +105,6 @@ const CadastroServico = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-
-
-                
                 <Text style={styles.label}>Nome do Serviço:</Text>
                 <TextInput
                     style={styles.input}
@@ -117,30 +122,7 @@ const CadastroServico = ({ navigation }) => {
                     multiline
                 />
 
-                <Text style={styles.label}>Categoria:</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Informe a categoria"
-                    value={categoria}
-                    onChangeText={setCategoria}
-                />
-
-                <Text style={styles.label}>Região de Atuação:</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Informe a região de atuação"
-                    value={areaAtuacao}
-                    onChangeText={setAreaAtuacao}
-                />
-
-                <Text style={styles.label}>Preço Mínimo:</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Informe o preço mínimo"
-                    value={precoMin}
-                    onChangeText={setPrecoMin}
-                    keyboardType="numeric"
-                />
+                
 
                 <TouchableOpacity style={styles.buttonImagem} onPress={handleImagemServico}>
                     <Text style={styles.textButton}>Selecione uma imagem</Text>
@@ -156,9 +138,6 @@ const CadastroServico = ({ navigation }) => {
                         mutation.mutate({
                             nomeServico,
                             descricaoServico,
-                            categoria,
-                            areaAtuacao,
-                            precoMin,
                             imagem,
                         });
                     }}

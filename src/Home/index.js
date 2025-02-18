@@ -16,6 +16,9 @@ const Home = () => {
         <TouchableOpacity onPress={() => navigation.navigate('PerfilUsuario')} style={styles.profileIconContainer}>
           <Image source={require('../assets/job.png')} style={styles.profileIcon} />
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('ListarServicos')} style={styles.profileIconContainer}>
+          <Image source={require('../assets/job.png')} style={styles.profileIcon} />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.searchContainer}>
@@ -123,6 +126,8 @@ const Home = () => {
             <Text style={styles.serviceRating}>4.8 (99 Vizualizações)</Text>
           </View>
         </TouchableOpacity>
+
+        
    
       </View>
     </ScrollView>

@@ -12,25 +12,29 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getUsuario, atualizarStatus } from '../services/fetchs';
 import { useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 const PerfilUsuario = () => {
+
+    const navigation = useNavigation();
+
     const { data: perfilUsuario, error, isLoading } = useQuery({
         queryKey: ['perfilUsuario'],
         queryFn: getUsuario
-        
+
     });
 
     const mutation = useMutation({
         mutationFn: () => {
-            
-            return atualizarStatus({tipo_usuario: isPrestador ? 'cliente' : 'profissional'});
+
+            return atualizarStatus({ tipo_usuario: isPrestador ? 'cliente' : 'profissional' });
         },
 
         onSuccess: async (data) => {
             console.log('Status atualizado com sucesso:', data);
             perfilUsuario.tipo_usuario = data?.tipo_usuario;
-            if (data?.tipo_usuario ==='profissional') {
-                
+            if (data?.tipo_usuario === 'profissional') {
+
                 setIsPrestador(true);
             } else {
                 setIsPrestador(false);
@@ -43,19 +47,19 @@ const PerfilUsuario = () => {
 
     useEffect(() => {
         // if (perfilUsuario && perfilUsuario.length > 0) {
-            if (perfilUsuario) {
+        if (perfilUsuario) {
 
-                if (perfilUsuario?.tipo_usuario ==='profissional') {
-                    setIsPrestador(true);
-                }
+            if (perfilUsuario?.tipo_usuario === 'profissional') {
+                setIsPrestador(true);
+            }
         }
-    },[perfilUsuario]);
+    }, [perfilUsuario]);
     //   }, [perfilUsuario]);
 
     //   const tornarPrestador = async () => {
     //     try {
     //       console.log('Botão pressionado!');
-      
+
     //       if (perfilUsuario && perfilUsuario.length > 0) {
     //         const usuarioAtualizado = { ...perfilUsuario };
     //         if (isPrestador) {
@@ -63,7 +67,7 @@ const PerfilUsuario = () => {
     //         } else {
     //           usuarioAtualizado.tipo_usuario = 'profissional';
     //         }
-      
+
     //         await atualizarStatus(usuarioAtualizado.id, usuarioAtualizado);
     //         setIsPrestador(!isPrestador);
     //       } else {
@@ -87,22 +91,35 @@ const PerfilUsuario = () => {
                 {/* Seção do Perfil */}
                 <View style={styles.profileSection}>
                     <Image
-                        source={{ uri: 'http://10.57.45.56:3333/users/' + perfilUsuario?.foto_usuario }}
+                        source={{ uri: 'http://192.168.50.18:3333/users/' + perfilUsuario?.foto_usuario }}
                         style={styles.profileImage}
                     />
                     <Text style={styles.profileName}>Dados pessoais</Text>
                     <View style={styles.profileBox}>
-                        
+
                         <TextInput editable={false} style={styles.profileInfo2}>{perfilUsuario?.email}</TextInput>
                         <TextInput editable={false} style={styles.profileInfo2}>{perfilUsuario?.telefone}</TextInput>
                         <TextInput editable={false} style={styles.profileInfo2}>{perfilUsuario?.nome}</TextInput>
                         <TextInput editable={false} style={styles.profileInfo2}>{perfilUsuario?.tipo_usuario}</TextInput>
-                    </View>    
+                    </View>
                 </View>
+
                 <Text>Olá, {perfilUsuario?.nome}</Text>
-                <TouchableOpacity style={styles.button} onPress={() => {mutation.mutate()}}>
+                <TouchableOpacity style={styles.button} onPress={() => { mutation.mutate() }}>
                     <Text>{isPrestador ? 'Você é um prestador de serviço, quer deixar de ser ?' : 'Quer prestar serviço ?'}</Text>
                 </TouchableOpacity>
+
+                {/* Botão para cadastrar serviço (apenas para prestadores) */}
+                {isPrestador && (
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('CadastroCatalogo')}
+                    >
+                        <Text>Cadastrar Serviço</Text>
+                    </TouchableOpacity>
+                )}
+
+
             </ScrollView>
         </SafeAreaView>
     );

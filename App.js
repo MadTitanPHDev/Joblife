@@ -14,6 +14,10 @@ import PerfilUsuario from './src/PerfilUsuario';
 import PerfilProfissional from './src/PerfilProfissional';
 
 import CadastroCatalogo from './src/CadastroCatalogoServicos';
+import ListarServicos from './src/ListarCatalogo';
+import CadastroServico from './src/CadastroCatalogoServicos';
+import ListarServicosItens from './src/CatalogoServicoItem/listar';
+import CadastroServicoItem from './src/CatalogoServicoItem/cadastro';
 
 
 const queryClient = new QueryClient()
@@ -28,7 +32,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="BemVindo">
 
 
-          
+
           <Stack.Screen name="PerfilProfissional" component={PerfilProfissional} />
           <Stack.Screen name='PerfilUsuario' component={PerfilUsuario} />
           <Stack.Screen name="BemVindo" component={BemVindo} />
@@ -37,9 +41,13 @@ export default function App() {
           <Stack.Screen name="Correios" component={Correios} />
           <Stack.Screen name="CadastroUsuario" component={CadastroUsuario} />
           <Stack.Screen name="CadastroCatalogo" component={CadastroCatalogo} />
-          
-          
-          </Stack.Navigator>
+          <Stack.Screen name="ListarServicos" component={ListarServicos} />
+
+          {/* <Stack.Screen name="ListarServicosItens" component={ListarServicosItens}/>
+          <Stack.Screen name="CadastroServicoItens" component={CadastroServicoItem}/> */}
+
+
+        </Stack.Navigator>
       </NavigationContainer>
     </QueryClientProvider>
 
